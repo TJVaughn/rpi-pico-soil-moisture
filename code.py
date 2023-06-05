@@ -12,7 +12,6 @@ SOIL_SENSOR_PIN = board.GP27
 SOIL_POWER_PIN = board.GP7
 
 CAP_SENSOR_SIGNAL = analogio.AnalogIn(SOIL_SENSOR_PIN)
-# print("SENSOR SIGNAL", CAP_SENSOR_SIGNAL)
 CAP_SENSOR_POWER = digitalio.DigitalInOut(SOIL_POWER_PIN)
 CAP_SENSOR_POWER.direction = digitalio.Direction.OUTPUT
 CAP_SENSOR_POWER.value = False
@@ -98,11 +97,8 @@ while True:
         time.sleep(0.2)
     else:
         value = round(CAP_SENSOR_SIGNAL.value / 100)
-        # print("reading:", value)
 
         CAP_SENSOR_POWER.value = True
-        # MAX value is basically 0%
-        # MIN value is basically 100%
 
         percent = round(((value - SENSOR_MIN) / (SENSOR_MAX - SENSOR_MIN)) * 100) - 100
         if(percent < 0):
@@ -117,43 +113,3 @@ while True:
         set_pixels_by_percent(percent)
         time.sleep(READING_DELAY)
 
-
-    # if AUTO_CALIBRATE:
-
-    #     CAP_SENSOR_POWER.value = True
-    #     value = round(CAP_SENSOR_SIGNAL.value / 100)
-    #     CAP_SENSOR_POWER.value = False
-
-    #     print("value", value)
-
-    #     if value > SENSOR_MAX:
-    #         SENSOR_MAX = value
-
-    #     if value < SENSOR_MIN:
-    #         SENSOR_MIN = value
-
-    #     CALIBRATE_COUNT += 1
-
-        # if(CALIBRATE_COUNT > 99):
-        #     print("\n---------------------")
-        #     print("MIN", SENSOR_MIN)
-        #     print("MAX", SENSOR_MAX)
-        #     print("---------------------\n")
-        #     time.sleep(5)
-
-        #     AUTO_CALIBRATE = False
-        
-    #     time.sleep(0.2)
-    #     if(CALIBRATE_COUNT > 50 and not EMPTY):
-    #         EMPTY = True
-    #         print("REMOVE SENSOR FROM GLASS")
-    #         time.sleep(5)
-    # else:
-        # value = round(CAP_SENSOR_SIGNAL.value / 100)
-        # print("reading:", value)
-
-        # CAP_SENSOR_POWER.value = True
-        # percent = round(((value - SENSOR_MIN) / (SENSOR_MAX - SENSOR_MIN)) * 100)
-        # print("Percent:", percent)
-
-        # time.sleep(READING_DELAY)
